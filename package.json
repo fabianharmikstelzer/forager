@@ -1,0 +1,25 @@
+{
+  "name": "session-forager",
+  "version": "1.0.0",
+  "description": "Forage through your Claude Code session history with semantic search",
+  "type": "module",
+  "bin": {
+    "forager": "./bin/session-memory.js"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "session",
+    "search",
+    "semantic-search",
+    "embeddings",
+    "cli"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@huggingface/transformers": "^3.5.0",
+    "better-sqlite3": "^11.8.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0"
+  }
+}
