@@ -68,8 +68,8 @@ program
       const score = r.score.toFixed(2);
       const date = r.modified ? formatDate(r.modified) : '?';
       const summary = r.summary || 'untitled';
-      const shortId = r.session_id.slice(0, 8);
       const project = r.project_path ? shortenPath(r.project_path) : '';
+      const isHistory = r.session_id.startsWith('history-');
 
       console.log(chalk.white.bold(` ${i + 1}. `) + chalk.dim(`[${score}] `) + chalk.white(summary) + chalk.dim(` (${date})`));
       if (project) {
@@ -77,7 +77,12 @@ program
         if (r.git_branch) line += `  Branch: ${r.git_branch}`;
         console.log(chalk.dim(line));
       }
-      console.log(chalk.cyan(`    Resume: claude --resume ${shortId}`));
+      if (isHistory) {
+        console.log(chalk.dim(`    (prompt history only — no full session to resume)`));
+      } else {
+        const shortId = r.session_id.slice(0, 8);
+        console.log(chalk.cyan(`    Resume: claude --resume ${shortId}`));
+      }
       console.log('');
     });
 
