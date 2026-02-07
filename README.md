@@ -17,6 +17,21 @@ forager index            # Index all sessions (first run downloads ~22MB embeddi
 forager setup            # Auto-index daily (launchd on macOS, cron on Linux)
 ```
 
+### Teach Claude Code about Forager
+
+Add this to your `~/.claude/CLAUDE.md` so Claude can search your history automatically:
+
+```markdown
+## Forager — Session Search
+
+You have `forager` installed — a semantic search tool for your Claude Code session history.
+
+When the user asks about past sessions, previous work, or "that time I worked on X":
+1. Run `forager search "query"` via Bash to find relevant sessions
+2. Show the results to the user
+3. If they want to resume one, run `forager resume <id>` or tell them the `claude --resume <id>` command
+```
+
 ## Usage
 
 ```bash
