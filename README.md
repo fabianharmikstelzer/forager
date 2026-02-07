@@ -2,7 +2,7 @@
 
 # session-forager
 
-Forage through your Claude Code session history with semantic search. Find and resume any past conversation.
+Forage through your Claude Code session history with semantic search. Find any past conversation.
 
 ## Install
 
@@ -29,7 +29,7 @@ You have `forager` installed — a semantic search tool for your Claude Code ses
 When the user asks about past sessions, previous work, or "that time I worked on X":
 1. Run `forager search "query"` via Bash to find relevant sessions
 2. Show the results to the user
-3. If they want to resume one, run `forager resume <id>` or tell them the `claude --resume <id>` command
+3. If they want to resume one, tell them the `claude --resume <id>` command to run
 ```
 
 ## Usage
@@ -48,10 +48,7 @@ forager search "that auth bug I fixed"
     Resume: claude --resume b4905ee8
 ```
 
-```bash
-forager resume 1         # Resume result #1 from last search
-forager resume e75b8241  # Or by session ID prefix
-```
+Copy the `claude --resume` command and run it in a new terminal to pick up where you left off.
 
 ### All Commands
 
@@ -61,7 +58,6 @@ forager resume e75b8241  # Or by session ID prefix
 | `forager index --full` | Re-index everything from scratch |
 | `forager search "query"` | Semantic search across all sessions |
 | `forager search "query" -n 10` | Return more results |
-| `forager resume <id>` | Resume a session by ID prefix or result number |
 | `forager stats` | Show index statistics |
 | `forager setup` | Install daily auto-indexing |
 | `forager teardown` | Remove daily auto-indexing |

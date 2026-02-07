@@ -2,13 +2,13 @@
 
 import { Command } from 'commander';
 import chalk from 'chalk';
-import { execFileSync, execSync } from 'child_process';
+import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { writeFileSync, unlinkSync, existsSync } from 'fs';
 import { join } from 'path';
 import { homedir, platform } from 'os';
 import { indexSessions } from '../src/indexer.js';
-import { searchSessions, resolveSessionId } from '../src/search.js';
+import { searchSessions } from '../src/search.js';
 import { getStats, closeDb } from '../src/db.js';
 
 const program = new Command();
@@ -87,22 +87,6 @@ program
     });
 
     closeDb();
-  });
-
-program
-  .command('resume <id>')
-  .description('Resume a session by ID, prefix, or result number')
-  .action((id) => {
-    const sessionId = resolveSessionId(id);
-    if (!sessionId) {
-      console.log(chalk.red(`Could not find session matching "${id}"`));
-      closeDb();
-      process.exit(1);
-    }
-
-    console.log(chalk.blue(`Resuming session ${sessionId.slice(0, 8)}...`));
-    closeDb();
-    execFileSync('claude', ['--resume', sessionId], { stdio: 'inherit' });
   });
 
 program

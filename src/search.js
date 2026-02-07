@@ -1,4 +1,4 @@
-import { getAllSessions, getSessionByPrefix, setMeta, getMeta } from './db.js';
+import { getAllSessions } from './db.js';
 import { embed, bufferToEmbedding } from './embeddings.js';
 
 function cosineSimilarity(a, b) {
@@ -29,28 +29,5 @@ export async function searchSessions(query, { limit = 5 } = {}) {
     .sort((a, b) => b.score - a.score)
     .slice(0, limit);
 
-  // Save last search results for `resume <number>` shorthand
-  const resultIds = scored.map((s) => s.session_id);
-  setMeta('last_search_results', JSON.stringify(resultIds));
-
   return scored;
-}
-
-export function resolveSessionId(idOrIndex) {
-  // If it looks like a small number, treat it as a result index from last search
-  const num = parseInt(idOrIndex, 10);
-  if (!isNaN(num) && num >= 1 && num <= 20 && idOrIndex === String(num)) {
-    const lastResults = getMeta('last_search_results');
-    if (lastResults) {
-      const ids = JSON.parse(lastResults);
-      if (num <= ids.length) {
-        return ids[num - 1];
-      }
-    }
-    return null;
-  }
-
-  // Otherwise treat as a session ID or prefix
-  const session = getSessionByPrefix(idOrIndex);
-  return session ? session.session_id : null;
 }
